@@ -28,22 +28,29 @@ class PlaylistRepository extends ServiceEntityRepository
         $this->getEntityManager()->remove($entity);
         $this->getEntityManager()->flush();
     }
-
+    
     /**
-     * Retourne toutes les playlists triées sur le nom de la playlist
-     * @param type $champ
-     * @param type $ordre
-     * @return Playlist[]
-     */
-    public function findAllOrderByName($ordre): array
+    * Retourne toutes les playlists triées par nom ou par nombre de formations.
+    *
+    * @param string $champ Champ de tri : 'name' ou 'nbFormations'
+    * @param string $ordre Sens du tri : 'ASC' ou 'DESC'
+    * @return Playlist[]
+    */
+    public function findAllOrderBy($champ, $ordre): array
     {
-        return $this->createQueryBuilder('p')
-                        ->leftjoin('p.formations', 'f')
-                        ->groupBy('p.id')
-                        ->orderBy('p.name', $ordre)
-                        ->getQuery()
-                        ->getResult();
+        $query = $this->createQueryBuilder('p')
+                ->leftJoin('p.formations', 'f')
+                ->groupBy('p.id');
+
+        if ($champ === 'nbFormations') {
+            $query->orderBy('COUNT(f.id)', $ordre);
+        } else {
+            $query->orderBy('p.name', $ordre);
+        }
+
+        return $query->getQuery()->getResult();
     }
+
 
     /**
      * Enregistrements dont un champ contient une valeur
@@ -56,7 +63,7 @@ class PlaylistRepository extends ServiceEntityRepository
     public function findByContainValue($champ, $valeur, $table = ""): array
     {
         if ($valeur == "") {
-            return $this->findAllOrderByName('ASC');
+            return $this->findAllOrderBy('name', 'ASC');
         }
         if ($table == "") {
             return $this->createQueryBuilder('p')
