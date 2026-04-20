@@ -59,7 +59,7 @@ class PlaylistsController extends AbstractController
     #[Route('/playlists', name: 'playlists')]
     public function index(): Response
     {
-        $playlists = $this->playlistRepository->findAllOrderByName('ASC');
+        $playlists = $this->playlistRepository->findAllOrderBy('name','ASC');
         $categories = $this->categorieRepository->findAll();
         return $this->render(self::VUE_PLAYLISTS, [
             'playlists' => $playlists,
@@ -71,7 +71,7 @@ class PlaylistsController extends AbstractController
     public function sort($champ, $ordre): Response
     {
         if ($champ === "name") {
-            $playlists = $this->playlistRepository->findAllOrderByName($ordre);
+            $playlists = $this->playlistRepository->findAllOrderBy($champ,$ordre);
         } else {
             $playlists = $this->playlistRepository->findAll();
         }

@@ -1,0 +1,95 @@
+{{ form_start(formFormation) }}
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <th class="text-left align-middle">
+                    Titre
+                </th>
+                <td>
+                    {{ form_widget(formFormation.title, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(formFormation.title) }}
+                </td>
+            </tr>
+
+            <tr>
+                <th class="text-left align-middle">
+                    Playlist
+                </th>
+                <td>
+                    {{ form_widget(formFormation.playlist, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(formFormation.playlist) }}
+                </td>
+            </tr>
+
+            <tr>
+                <th class="text-left align-middle">
+                    Catégories
+                </th>
+                <td>
+                    {{ form_widget(formFormation.categories, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(formFormation.categories) }}
+                    <small class="form-text text-muted">
+                        Vous pouvez ne sélectionner aucune catégorie.
+                    </small>
+                </td>
+            </tr>
+
+            <tr>
+                <th class="text-left align-middle">
+                    Date
+                </th>
+                <td>
+                    {{ form_widget(formFormation.publishedAt, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(formFormation.publishedAt) }}
+                </td>
+            </tr>
+
+            <tr>
+                <th class="text-left align-middle">
+                    Identifiant vidéo
+                </th>
+                <td>
+                    {{ form_widget(formFormation.videoId, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(formFormation.videoId) }}
+                </td>
+            </tr>
+
+            <tr>
+                <th class="text-left align-middle">
+                    Description
+                </th>
+                <td>
+                    {{ form_widget(formFormation.description, {'attr': {'class': 'form-control', 'rows': 5}}) }}
+                    {{ form_errors(formFormation.description) }}
+                </td>
+            </tr>
+
+            {% if formation is defined and formation.id and formation.videoId %}
+                <tr>
+                    <th class="text-left align-middle">
+                        Aperçu
+                    </th>
+                    <td>
+                        <img
+                            src="{{ formation.miniature }}"
+                            class="img-thumbnail"
+                            style="max-width: 240px;"
+                            alt="Miniature de {{ formation.title }}"
+                        >
+                    </td>
+                </tr>
+            {% endif %}
+
+            <tr>
+                <th></th>
+                <td>
+                    {{ form_widget(formFormation.submit, {'attr': {'class': 'btn btn-info active'}}) }}
+
+                    <a href="{{ path('admin.formations.index') }}" class="btn btn-secondary">
+                        Annuler
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+{{ form_end(formFormation) }}

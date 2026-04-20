@@ -1,0 +1,58 @@
+{% extends 'baseadmin.html.twig' %}
+
+{% block title %}Accueil administration | {{ parent() }}{% endblock %}
+
+{% block body %}
+    <div class="container-fluid mt-4">
+        <div class="p-4 bg-light rounded-3 border">
+            <h2 class="mb-3">Bienvenue dans le back office</h2>
+            <p class="mb-4">
+                Cet espace permet de gérer les contenus de MediatekFormation.
+            </p>
+        </div>
+
+        <div class="row mt-4 g-4">
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h3 class="card-title h5">Formations</h3>
+                        <p class="card-text">
+                            Consulter et administrer les formations.
+                        </p>
+                        <a href="{{ path('admin.formations.index') }}" class="btn btn-primary">
+                            Accéder
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h3 class="card-title h5">Playlists</h3>
+                        <p class="card-text">
+                            Gérer les playlists disponibles.
+                        </p>
+                        <a href="{{ path('admin.playlists.index') }}" class="btn btn-primary">
+                            Accéder
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h3 class="card-title h5">Catégories</h3>
+                        <p class="card-text">
+                            Organiser les formations par catégories.
+                        </p>
+                        <a href="{{ path('admin.categories.index') }}" class="btn btn-primary">
+                            Accéder
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
