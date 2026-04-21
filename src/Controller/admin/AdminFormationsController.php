@@ -46,13 +46,20 @@ class AdminFormationsController extends AbstractController
             'formation' => $formation
         ]);
     }
-        
-    #[Route('/suppr/{id}', name: 'suppr')]
-    public function suppr(int $id, FormationRepository $formationRepository): Response
-    {
+    
+    #[Route('/suppr/{id}', name: 'suppr', methods: ['POST'])]
+    public function suppr(
+        int $id,
+        Request $request,
+        FormationRepository $formationRepository
+    ): Response {
         $formation = $formationRepository->find($id);
 
         if (!$formation) {
+            return $this->redirectToRoute('admin.formations.index');
+        }
+
+        if (!$this->isCsrfTokenValid('suppr_formation_' . $formation->getId(), $request->request->get('_token'))) {
             return $this->redirectToRoute('admin.formations.index');
         }
 
@@ -60,6 +67,7 @@ class AdminFormationsController extends AbstractController
 
         return $this->redirectToRoute('admin.formations.index');
     }
+
     
     #[Route('/edit/{id}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(

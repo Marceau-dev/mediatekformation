@@ -61,6 +61,17 @@ class FormationRepository extends ServiceEntityRepository
      */
     public function findByContainValue($champ, $valeur, $table = ""): array
     {
+        $champsAutorises = ['title', 'name', 'id'];
+        $tablesAutorisees = ['', 'playlist', 'categories'];
+
+        if (!in_array($champ, $champsAutorises)) {
+            $champ = 'title';
+        }
+
+        if (!in_array($table, $tablesAutorisees)) {
+            $table = '';
+        }
+        
         if ($valeur == "") {
             return $this->findAll();
         }

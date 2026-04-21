@@ -101,11 +101,16 @@
                                 Editer
                             </a>
 
-                            <a href="{{ path('admin.formations.suppr', {id: formation.id}) }}"
-                               class="btn btn-danger ml-2"
-                               onclick="return confirm('Voulez-vous vraiment supprimer cette formation ?');">
-                                Supprimer
-                            </a>
+                            <form method="post"
+                                  action="{{ path('admin.formations.suppr', {id: formation.id}) }}"
+                                  style="display:inline-block;"
+                                  onsubmit="return confirm('Voulez-vous vraiment supprimer cette formation ?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('suppr_formation_' ~ formation.id) }}">
+
+                                <button type="submit" class="btn btn-danger ml-2">
+                                    Supprimer
+                                </button>
+                            </form>
                         </td>
 
                     </tr>
