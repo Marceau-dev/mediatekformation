@@ -1,0 +1,81 @@
+{% extends 'baseadmin.html.twig' %}
+
+{% block title %}Catégories | {{ parent() }}{% endblock %}
+
+{% block body %}
+    <div class="container-fluid mt-4">
+        <h2>Gestion des catégories</h2>
+
+        <p>Bienvenue dans l'espace d'administration des catégories.</p>
+
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+        <form method="post" action="{{ path('admin.categories.ajout') }}" class="form-inline mb-4">
+            <div class="d-flex align-items-center">
+                <input type="text" id="name" name="name" class="form-control" style="width: 260px;" maxlength="50" required>
+                <input type="hidden" name="_token" value="{{ csrf_token('ajout_categorie') }}">
+
+                <button type="submit" class="btn btn-info active" style="margin-left: 8px;">
+                    Ajouter
+                </button>
+            </div>
+        </form>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="text-left align-top">
+                        Catégorie
+                    </th>
+
+                    <th class="text-center align-top">
+                        Nombre de formations
+                    </th>
+
+                    <th class="text-center align-top">
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for categorie in categories %}
+                    <tr class="align-middle">
+                        <td>
+                            <h5 class="text-info">
+                                {{ categorie.name }}
+                            </h5>
+                        </td>
+
+                        <td class="text-center">
+                            {{ categorie.formations|length }}
+                        </td>
+
+                        <td class="text-center" style="white-space: nowrap;">
+                            <form method="post"
+                                  action="{{ path('admin.categories.suppr', {id: categorie.id}) }}"
+                                  style="display:inline-block;"
+                                  onsubmit="return confirm('Voulez-vous vraiment supprimer cette catégorie ?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('suppr_categorie_' ~ categorie.id) }}">
+
+                                <button type="submit" class="btn btn-danger ml-2">
+                                    Supprimer
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3" class="text-center">Aucune catégorie trouvée.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
