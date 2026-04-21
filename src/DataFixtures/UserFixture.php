@@ -26,6 +26,16 @@ class UserFixture extends Fixture
         );
 
         $manager->persist($user);
+        
+        $user2 = new User();
+        $user2->setUsername('Marceau');
+        $user2->setRoles(['ROLE_ADMIN']);
+        $user2->setPassword(
+            $this->passwordHasher->hashPassword($user2, 'Marceau-devadmin')
+        );
+
+        $manager->persist($user2);
+        
         $manager->flush();
     }
 }
