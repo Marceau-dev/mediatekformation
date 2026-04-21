@@ -1,0 +1,53 @@
+{{ form_start(formPlaylist) }}
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <th class="text-left align-middle">
+                    Nom
+                </th>
+                <td>
+                    {{ form_widget(formPlaylist.name, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(formPlaylist.name) }}
+                </td>
+            </tr>
+
+            <tr>
+                <th class="text-left align-middle">
+                    Description
+                </th>
+                <td>
+                    {{ form_widget(formPlaylist.description, {'attr': {'class': 'form-control', 'rows': 5}}) }}
+                    {{ form_errors(formPlaylist.description) }}
+                </td>
+            </tr>
+
+            {% if playlist is defined and playlist.id %}
+            <tr>
+                <th class="text-left align-middle">
+                    Formations
+                </th>
+                <td>
+                    {% for formation in playlist.formations %}
+                        {{ formation.title }}<br />
+                    {% else %}
+                        Aucune formation dans cette playlist.
+                    {% endfor %}
+                </td>
+            </tr>
+            {% endif %}
+            
+            <tr>
+                <th></th>
+                <td>
+                    {{ form_widget(formPlaylist.submit, {'attr': {'class': 'btn btn-info active'}}) }}
+
+                    <a href="{{ path('admin.playlists.index') }}" class="btn btn-secondary">
+                        Annuler
+                    </a>
+                </td>
+            </tr>
+            
+
+        </tbody>
+    </table>
+{{ form_end(formPlaylist) }}

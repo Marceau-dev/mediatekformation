@@ -35,9 +35,20 @@ class PlaylistRepository extends ServiceEntityRepository
     * @param string $champ Champ de tri : 'name' ou 'nbFormations'
     * @param string $ordre Sens du tri : 'ASC' ou 'DESC'
     * @return Playlist[]
-    */
+    */   
     public function findAllOrderBy($champ, $ordre): array
     {
+        $champsAutorises = ['name', 'nbFormations'];
+        $ordresAutorises = ['ASC', 'DESC'];
+
+        if (!in_array($champ, $champsAutorises, true)) {
+            $champ = 'name';
+        }
+
+        if (!in_array($ordre, $ordresAutorises, true)) {
+            $ordre = 'ASC';
+        }
+
         $query = $this->createQueryBuilder('p')
                 ->leftJoin('p.formations', 'f')
                 ->groupBy('p.id');
@@ -52,6 +63,7 @@ class PlaylistRepository extends ServiceEntityRepository
     }
 
 
+
     /**
      * Enregistrements dont un champ contient une valeur
      * ou tous les enregistrements si la valeur est vide
@@ -62,9 +74,24 @@ class PlaylistRepository extends ServiceEntityRepository
      */
     public function findByContainValue($champ, $valeur, $table = ""): array
     {
+        $tablesAutorisees = ['', 'categories'];
+        $champsAutorises = [
+            '' => ['name'],
+            'categories' => ['id'],
+        ];
+
+        if (!in_array($table, $tablesAutorisees, true)) {
+            $table = '';
+        }
+
+        if (!in_array($champ, $champsAutorises[$table], true)) {
+            $champ = $table === 'categories' ? 'id' : 'name';
+        }
+
         if ($valeur == "") {
             return $this->findAllOrderBy('name', 'ASC');
         }
+
         if ($table == "") {
             return $this->createQueryBuilder('p')
                             ->leftjoin('p.formations', 'f')
