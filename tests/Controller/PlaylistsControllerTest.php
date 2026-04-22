@@ -36,6 +36,16 @@ class PlaylistsControllerTest extends RepositoryTestCase
         $this->assertCount(1, $crawler->filter('tbody tr'));
         $this->assertSame('Symfony', $this->getFirstLineColumnText($crawler, 0));
     }
+    
+    public function testPlaylistsSortByNbFormationsAsc(): void
+    {
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/playlists/tri/nbFormations/ASC');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSame('PHP', $this->getFirstLineColumnText($crawler, 0));
+    }
 
     public function testPlaylistsLinkToDetailPage(): void
     {
