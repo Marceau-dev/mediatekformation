@@ -1,0 +1,26 @@
+name: Déploiement continu
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    name: Synchronisation SFTP
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Récupération du code
+        uses: actions/checkout@v4
+
+      - name: Envoi des fichiers sur le VPS
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.6
+        with:
+          username: root
+          server: 72.62.237.246
+          port: 22
+          password: ${{ secrets.SFTP_PASSWORD }}
+          local_path: './*'
+          remote_path: '/var/www/mediatekformation'
+          sftpArgs: '-o ConnectTimeout=5'
