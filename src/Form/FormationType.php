@@ -23,8 +23,18 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * Formulaire de création et de modification d'une formation.
+ */
 class FormationType extends AbstractType
 {
+    /**
+    * Construit le formulaire de formation avec ses champs et ses règles de validation.
+    *
+    * @param FormBuilderInterface $builder Constructeur du formulaire.
+    * @param array $options Options du formulaire.
+    * @return void
+    */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -101,7 +111,13 @@ class FormationType extends AbstractType
                 'label' => 'Enregistrer',
             ]);
     }
-
+    
+    /**
+    * Configure les options du formulaire de formation.
+    *
+    * @param OptionsResolver $resolver Résolveur d'options du formulaire.
+    * @return void
+    */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

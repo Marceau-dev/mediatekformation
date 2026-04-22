@@ -7,6 +7,8 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * Repository permettant de gérer les requêtes liées aux catégories.
+ *
  * @extends ServiceEntityRepository<Categorie>
  */
 class CategorieRepository extends ServiceEntityRepository
@@ -16,12 +18,24 @@ class CategorieRepository extends ServiceEntityRepository
         parent::__construct($registry, Categorie::class);
     }
 
+    /**
+    * Ajoute une catégorie en base de données.
+    *
+    * @param Categorie $entity Catégorie à ajouter.
+    * @return void
+    */
     public function add(Categorie $entity): void
     {
         $this->getEntityManager()->persist($entity);
         $this->getEntityManager()->flush();
     }
 
+    /**
+    * Supprime une catégorie de la base de données.
+    *
+    * @param Categorie $entity Catégorie à supprimer.
+    * @return void
+    */
     public function remove(Categorie $entity): void
     {
         $this->getEntityManager()->remove($entity);

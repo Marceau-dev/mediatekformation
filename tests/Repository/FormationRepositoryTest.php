@@ -18,8 +18,9 @@ class FormationRepositoryTest extends RepositoryTestCase
 
     public function testAdd(): void
     {
+        $nouvelleFormation ='Nouvelle formation';
         $formation = $this->creerFormation(
-            'Nouvelle formation',
+            $nouvelleFormation,
             'video999',
             '2009-05-04',
             $this->playlistSymfony
@@ -28,23 +29,24 @@ class FormationRepositoryTest extends RepositoryTestCase
         $this->formationRepository->add($formation);
 
         $formationTrouvee = $this->formationRepository->findOneBy([
-            'title' => 'Nouvelle formation',
+            'title' => $nouvelleFormation,
         ]);
 
         $this->assertNotNull($formationTrouvee);
-        $this->assertSame('Nouvelle formation', $formationTrouvee->getTitle());
+        $this->assertSame($nouvelleFormation, $formationTrouvee->getTitle());
     }
 
     public function testRemove(): void
     {
+        $formationPHP='Formation PHP';
         $formation = $this->formationRepository->findOneBy([
-            'title' => 'Formation PHP',
+            'title' => $formationPHP,
         ]);
 
         $this->formationRepository->remove($formation);
 
         $formationSupprimee = $this->formationRepository->findOneBy([
-            'title' => 'Formation PHP',
+            'title' => $formationPHP,
         ]);
 
         $this->assertNull($formationSupprimee);

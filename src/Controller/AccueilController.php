@@ -20,14 +20,20 @@ class AccueilController extends AbstractController
     private $repository;
     
     /**
+     * Initialise le contrôleur avec le repository des formations.
      *
-     * @param FormationRepository $repository
+     * @param FormationRepository $repository Repository des formations.
      */
     public function __construct(FormationRepository $repository)
     {
         $this->repository = $repository;
     }
     
+    /**
+    * Affiche la page d'accueil avec les dernières formations publiées.
+    *
+    * @return Response Page d'accueil.
+    */
     #[Route('/', name: 'accueil')]
     public function index(): Response
     {
@@ -37,6 +43,11 @@ class AccueilController extends AbstractController
         ]);
     }
     
+    /**
+    * Affiche la page des conditions générales d'utilisation.
+    *
+    * @return Response Page des CGU.
+    */   
     #[Route('/cgu', name: 'cgu')]
     public function cgu(): Response
     {

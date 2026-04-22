@@ -7,6 +7,9 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
+/**
+ * Classe de fixtures permettant de créer les utilisateurs de test.
+ */
 class UserFixture extends Fixture
 {
     private UserPasswordHasherInterface $passwordHasher;
@@ -16,6 +19,12 @@ class UserFixture extends Fixture
         $this->passwordHasher = $passwordHasher;
     }
 
+    /**
+    * Charge les utilisateurs de test dans la base de données.
+    *
+    * @param ObjectManager $manager Gestionnaire d'entités Doctrine.
+    * @return void
+    */
     public function load(ObjectManager $manager): void
     {
         $user = new User();

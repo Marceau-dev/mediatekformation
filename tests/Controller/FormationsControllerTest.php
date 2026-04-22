@@ -16,7 +16,9 @@ class FormationsControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertSame('Formation Doctrine', $this->getFirstLineColumnText($crawler, 0));
     }
-
+    
+    private const TBODY_TR = 'tbody tr'; 
+    
     public function testFormationsFilterByTitle(): void
     {
         $client = static::createClient();
@@ -24,9 +26,9 @@ class FormationsControllerTest extends WebTestCase
         $crawler = $client->request('POST', '/formations/recherche/title', [
             'recherche' => 'Symfony',
         ]);
-
+        
         $this->assertResponseIsSuccessful();
-        $this->assertCount(1, $crawler->filter('tbody tr'));
+        $this->assertCount(1, $crawler->filter(self::TBODY_TR));
         $this->assertSame('Formation Symfony', $this->getFirstLineColumnText($crawler, 0));
     }
 
@@ -36,7 +38,7 @@ class FormationsControllerTest extends WebTestCase
 
         $crawler = $client->request('GET', '/formations');
 
-        $link = $crawler->filter('tbody tr')->first()->filter('a')->link();
+        $link = $crawler->filter(self::TBODY_TR)->first()->filter('a')->link();
         $crawler = $client->click($link);
 
         $this->assertResponseIsSuccessful();
@@ -46,6 +48,6 @@ class FormationsControllerTest extends WebTestCase
 
     private function getFirstLineColumnText(Crawler $crawler, int $column): string
     {
-        return trim($crawler->filter('tbody tr')->first()->filter('td')->eq($column)->text());
+        return trim($crawler->filter(self::TBODY_TR)->first()->filter('td')->eq($column)->text());
     }
 }

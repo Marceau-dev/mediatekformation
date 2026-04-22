@@ -42,6 +42,13 @@ class PlaylistsController extends AbstractController
      */
     private $categorieRepository;
     
+    /**
+    * Initialise le contrôleur avec les repositories nécessaires.
+    *
+    * @param PlaylistRepository $playlistRepository Repository des playlists.
+    * @param CategorieRepository $categorieRepository Repository des catégories.
+    * @param FormationRepository $formationRepository Repository des formations.
+    */
     public function __construct(
         PlaylistRepository $playlistRepository,
         CategorieRepository $categorieRepository,
@@ -53,8 +60,9 @@ class PlaylistsController extends AbstractController
     }
     
     /**
-     * @Route("/playlists", name="playlists")
-     * @return Response
+     * Affiche la liste complète des playlists.
+     *
+     * @return Response Page contenant la liste des playlists.
      */
     #[Route('/playlists', name: 'playlists')]
     public function index(): Response
@@ -67,6 +75,13 @@ class PlaylistsController extends AbstractController
         ]);
     }
 
+    /**
+    * Affiche la liste des playlists triées selon un champ et un ordre donnés.
+    *
+    * @param string $champ Champ utilisé pour le tri.
+    * @param string $ordre Ordre du tri : ASC ou DESC.
+    * @return Response Page contenant les playlists triées.
+    */
     #[Route('/playlists/tri/{champ}/{ordre}', name: 'playlists.sort')]
     public function sort($champ, $ordre): Response
     {
@@ -83,6 +98,14 @@ class PlaylistsController extends AbstractController
         ]);
     }
 
+    /**
+    * Affiche les playlists correspondant à une recherche.
+    *
+    * @param string $champ Champ utilisé pour la recherche.
+    * @param Request $request Requête HTTP contenant la valeur recherchée.
+    * @param string $table Relation utilisée si le champ appartient à une autre table.
+    * @return Response Page contenant les playlists filtrées.
+    */
     #[Route('/playlists/recherche/{champ}/{table}', name: 'playlists.findallcontain')]
     public function findAllContain($champ, Request $request, $table=""): Response
     {
@@ -97,6 +120,12 @@ class PlaylistsController extends AbstractController
         ]);
     }
 
+    /**
+    * Affiche le détail d'une playlist avec ses formations et ses catégories.
+    *
+    * @param int $id Identifiant de la playlist.
+    * @return Response Page de détail de la playlist.
+    */
     #[Route('/playlists/playlist/{id}', name: 'playlists.showone')]
     public function showOne($id): Response
     {

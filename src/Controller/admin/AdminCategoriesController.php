@@ -1,10 +1,5 @@
 <?php
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/PHPClass.php to edit this template
- */
-
 namespace App\Controller\admin;
 
 use App\Entity\Categorie;
@@ -15,13 +10,19 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Description of AdminCategoriesController
+ * Contrôleur d'administration permettant de gérer les catégories.
  *
  * @author marce
  */
 #[Route('/admin/categories', name: 'admin.categories.')]
 class AdminCategoriesController extends AbstractController
 {
+    /**
+    * Affiche la liste des catégories dans le back office.
+    *
+    * @param CategorieRepository $categorieRepository Repository des catégories.
+    * @return Response Page d'administration des catégories.
+    */
     #[Route('', name: 'index', methods: ['GET'])]
     public function index(CategorieRepository $categorieRepository): Response
     {
@@ -30,6 +31,13 @@ class AdminCategoriesController extends AbstractController
         ]);
     }
 
+    /**
+    * Ajoute une nouvelle catégorie après vérification du jeton CSRF.
+    *
+    * @param Request $request Requête HTTP contenant le nom de la catégorie et le jeton CSRF.
+    * @param CategorieRepository $categorieRepository Repository des catégories.
+    * @return Response Redirection vers la liste des catégories.
+    */
     #[Route('/ajout', name: 'ajout', methods: ['POST'])]
     public function ajout(
         Request $request,
@@ -67,6 +75,15 @@ class AdminCategoriesController extends AbstractController
         return $this->redirectToRoute('admin.categories.index');
     }
 
+    /**
+    * Supprime une catégorie après vérification du jeton CSRF.
+    * La suppression est refusée si la catégorie est rattachée à une formation.
+    *
+    * @param int $id Identifiant de la catégorie à supprimer.
+    * @param Request $request Requête HTTP contenant le jeton CSRF.
+    * @param CategorieRepository $categorieRepository Repository des catégories.
+    * @return Response Redirection vers la liste des catégories.
+    */
     #[Route('/suppr/{id}', name: 'suppr', methods: ['POST'])]
     public function suppr(
         int $id,

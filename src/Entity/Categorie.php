@@ -7,6 +7,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * Entité représentant une catégorie associée à une ou plusieurs formations.
+ */
 #[ORM\Entity(repositoryClass: CategorieRepository::class)]
 class Categorie
 {
@@ -53,7 +56,13 @@ class Categorie
     {
         return $this->formations;
     }
-
+    
+    /**
+    * Associe une formation à la catégorie.
+    *
+    * @param Formation $formation Formation à associer.
+    * @return static
+    */
     public function addFormation(Formation $formation): static
     {
         if (!$this->formations->contains($formation)) {
@@ -64,6 +73,12 @@ class Categorie
         return $this;
     }
 
+    /**
+    * Retire une formation de la catégorie.
+    *
+    * @param Formation $formation Formation à retirer.
+    * @return static
+    */
     public function removeFormation(Formation $formation): static
     {
         if ($this->formations->removeElement($formation)) {

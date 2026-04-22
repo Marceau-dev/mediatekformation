@@ -1,10 +1,5 @@
 <?php
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/PHPClass.php to edit this template
- */
-
 namespace App\Controller\admin;
 
 use App\Entity\Playlist;
@@ -15,14 +10,22 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 /**
- * Description of AdminPlaylistsController
+ * Contrôleur d'administration permettant de gérer les playlists.
  *
  * @author marce
  */
 #[Route('/admin/playlists', name: 'admin.playlists.')]
 class AdminPlaylistsController extends AbstractController
 {
+    /**
+    * Affiche la liste des playlists dans le back office.
+    *
+    * @param CategorieRepository $categorieRepository Repository des catégories.
+    * @param PlaylistRepository $playlistRepository Repository des playlists.
+    * @return Response Page d'administration des playlists.
+    */
     #[Route('', name: 'index', methods: ['GET'])]
     public function index(CategorieRepository $categorieRepository, PlaylistRepository $playlistRepository): Response
     {
@@ -35,7 +38,16 @@ class AdminPlaylistsController extends AbstractController
 
         ]);
     }
-
+    
+    /**
+    * Affiche les playlists triées dans le back office.
+    *
+    * @param CategorieRepository $categorieRepository Repository des catégories.
+    * @param PlaylistRepository $playlistRepository Repository des playlists.
+    * @param string $champ Champ utilisé pour le tri.
+    * @param string $ordre Ordre du tri : ASC ou DESC.
+    * @return Response Page d'administration contenant les playlists triées.
+    */
     #[Route('/tri/{champ}/{ordre}', name: 'sort', methods: ['GET'])]
     public function sort(
         CategorieRepository $categorieRepository,
@@ -51,6 +63,14 @@ class AdminPlaylistsController extends AbstractController
         ]);
     }
 
+    /**
+    * Modifie une playlist existante à partir du formulaire d'administration.
+    *
+    * @param int $id Identifiant de la playlist à modifier.
+    * @param Request $request Requête HTTP contenant les données du formulaire.
+    * @param PlaylistRepository $playlistRepository Repository des playlists.
+    * @return Response Page du formulaire ou redirection après validation.
+    */
     #[Route('/edit/{id}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(
         int $id,
@@ -78,6 +98,15 @@ class AdminPlaylistsController extends AbstractController
         ]);
     }
 
+    /**
+    * Supprime une playlist après vérification du jeton CSRF.
+    * La suppression est refusée si la playlist contient des formations.
+    *
+    * @param int $id Identifiant de la playlist à supprimer.
+    * @param Request $request Requête HTTP contenant le jeton CSRF.
+    * @param PlaylistRepository $playlistRepository Repository des playlists.
+    * @return Response Redirection vers la liste des playlists.
+    */
     #[Route('/suppr/{id}', name: 'suppr', methods: ['POST'])]
     public function suppr(
         int $id,
@@ -111,6 +140,13 @@ class AdminPlaylistsController extends AbstractController
         return $this->redirectToRoute('admin.playlists.index');
     }
     
+    /**
+    * Ajoute une nouvelle playlist à partir du formulaire d'administration.
+    *
+    * @param Request $request Requête HTTP contenant les données du formulaire.
+    * @param PlaylistRepository $playlistRepository Repository des playlists.
+    * @return Response Page du formulaire ou redirection après validation.
+    */
     #[Route('/ajout', name: 'ajout', methods: ['GET', 'POST'])]
     public function ajout(Request $request, PlaylistRepository $playlistRepository): Response
     {
@@ -131,6 +167,16 @@ class AdminPlaylistsController extends AbstractController
         ]);
     }
 
+    /**
+    * Affiche les playlists filtrées dans le back office.
+    *
+    * @param string $champ Champ utilisé pour la recherche.
+    * @param Request $request Requête HTTP contenant la valeur recherchée.
+    * @param CategorieRepository $categorieRepository Repository des catégories.
+    * @param PlaylistRepository $playlistRepository Repository des playlists.
+    * @param string $table Relation utilisée si le champ appartient à une autre table.
+    * @return Response Page d'administration contenant les playlists filtrées.
+    */
     #[Route('/recherche/{champ}/{table}', name: 'findallcontain', defaults: ['table' => ''], methods: ['POST'])]
     public function findAllContain(
         string $champ,

@@ -7,6 +7,8 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * Repository permettant de gérer les requêtes liées aux playlists.
+ *
  * @extends ServiceEntityRepository<Playlist>
  */
 class PlaylistRepository extends ServiceEntityRepository
@@ -17,12 +19,24 @@ class PlaylistRepository extends ServiceEntityRepository
         parent::__construct($registry, Playlist::class);
     }
 
+    /**
+    * Ajoute une playlist en base de données.
+    *
+    * @param Playlist $entity Playlist à ajouter.
+    * @return void
+    */
     public function add(Playlist $entity): void
     {
         $this->getEntityManager()->persist($entity);
         $this->getEntityManager()->flush();
     }
 
+    /**
+    * Supprime une playlist de la base de données.
+    *
+    * @param Playlist $entity Playlist à supprimer.
+    * @return void
+    */
     public function remove(Playlist $entity): void
     {
         $this->getEntityManager()->remove($entity);

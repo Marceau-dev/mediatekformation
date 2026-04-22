@@ -8,6 +8,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * Entité représentant une playlist regroupant plusieurs formations.
+ */
 #[ORM\Entity(repositoryClass: PlaylistRepository::class)]
 class Playlist
 {
@@ -70,11 +73,22 @@ class Playlist
         return $this->formations;
     }
     
+    /**
+    * Retourne le nombre de formations associées à la playlist.
+    *
+    * @return int Nombre de formations.
+    */
     public function getNombreFormations(): int
     {
         return $this->formations->count();
     }
 
+    /**
+    * Ajoute une formation à la playlist.
+    *
+    * @param Formation $formation Formation à ajouter.
+    * @return static
+    */
     public function addFormation(Formation $formation): static
     {
         if (!$this->formations->contains($formation)) {
@@ -85,6 +99,12 @@ class Playlist
         return $this;
     }
 
+    /**
+    * Retire une formation de la playlist.
+    *
+    * @param Formation $formation Formation à retirer.
+    * @return static
+    */
     public function removeFormation(Formation $formation): static
     {
         if ($this->formations->removeElement($formation)) {
@@ -98,8 +118,10 @@ class Playlist
     }
     
     /**
-     * @return Collection<int, string>
-     */
+    * Retourne les noms des catégories utilisées par les formations de la playlist.
+    *
+    * @return Collection<int, string> Liste des noms de catégories.
+    */
     public function getCategoriesPlaylist() : Collection
     {
         $categories = new ArrayCollection();

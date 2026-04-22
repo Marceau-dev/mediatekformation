@@ -8,6 +8,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * Entité représentant une formation disponible sur le site.
+ */
 #[ORM\Entity(repositoryClass: FormationRepository::class)]
 class Formation
 {
@@ -65,6 +68,11 @@ class Formation
         return $this;
     }
 
+    /**
+    * Retourne la date de publication au format français.
+    *
+    * @return string Date au format jj/mm/aaaa ou chaîne vide si aucune date n'est définie.
+    */
     public function getPublishedAtString(): string
     {
         if ($this->publishedAt === null) {
@@ -109,11 +117,21 @@ class Formation
         return $this;
     }
 
+    /**
+    * Retourne l'URL de la miniature YouTube de la formation.
+    *
+    * @return string|null URL de la miniature.
+    */
     public function getMiniature(): ?string
     {
         return self::CHEMIN_IMAGE.$this->videoId."/default.jpg";
     }
 
+    /**
+    * Retourne l'URL de l'image YouTube haute qualité de la formation.
+    *
+    * @return string|null URL de l'image.
+    */
     public function getPicture(): ?string
     {
         return self::CHEMIN_IMAGE.$this->videoId."/hqdefault.jpg";
@@ -139,6 +157,12 @@ class Formation
         return $this->categories;
     }
 
+    /**
+    * Associe une catégorie à la formation si elle n'est pas déjà présente.
+    *
+    * @param Categorie $category Catégorie à associer.
+    * @return static
+    */
     public function addCategory(Categorie $category): static
     {
         if (!$this->categories->contains($category)) {
@@ -148,6 +172,12 @@ class Formation
         return $this;
     }
 
+    /**
+    * Retire une catégorie de la formation.
+    *
+    * @param Categorie $category Catégorie à retirer.
+    * @return static
+    */
     public function removeCategory(Categorie $category): static
     {
         $this->categories->removeElement($category);

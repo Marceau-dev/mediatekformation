@@ -18,13 +18,14 @@ class CategorieRepositoryTest extends RepositoryTestCase
 
     public function testAdd(): void
     {
+        $nouvelleCatégorie ='Nouvelle catégorie';
         $categorie = new Categorie();
-        $categorie->setName('Nouvelle catégorie');
+        $categorie->setName($nouvelleCatégorie);
 
         $this->categorieRepository->add($categorie);
 
         $categorieTrouvee = $this->categorieRepository->findOneBy([
-            'name' => 'Nouvelle catégorie',
+            'name' => $nouvelleCatégorie,
         ]);
 
         $this->assertNotNull($categorieTrouvee);
