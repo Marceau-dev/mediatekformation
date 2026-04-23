@@ -20,19 +20,23 @@
         </div>
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Afficher le menu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto list-unstyled">
+                <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('admin.index') }}">Accueil admin</a>
+                        <a class="nav-link ms-2" href="{{ path('admin.index') }}">Accueil admin</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('admin.formations.index') }}">Formations</a>
+                        <a class="nav-link ms-2" href="{{ path('admin.formations.index') }}">Formations</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('admin.playlists.index') }}">Playlists</a>
+                        <a class="nav-link ms-2" href="{{ path('admin.playlists.index') }}">Playlists</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('admin.categories.index') }}">Catégories</a>
+                        <a class="nav-link ms-2" href="{{ path('admin.categories.index') }}">Catégories</a>
                     </li>
                 </ul>
             </div>
