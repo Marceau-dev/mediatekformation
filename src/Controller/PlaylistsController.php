@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 
+use App\Entity\Playlist;
 use App\Repository\CategorieRepository;
 use App\Repository\FormationRepository;
 use App\Repository\PlaylistRepository;
@@ -135,4 +136,21 @@ class PlaylistsController extends AbstractController
         ]);
     }
     
+    #[Route('/playlists/{id}/like', name: 'playlists.like', methods: ['POST'])]
+    public function like(Playlist $playlist): Response
+    {
+        $playlist->addLikePlay();
+        $this->playlistRepository->add($playlist);
+
+        return $this->redirectToRoute('playlists');
+    }
+
+    #[Route('/playlists/{id}/unlike', name: 'playlists.unlike', methods: ['POST'])]
+    public function unlike(Playlist $playlist): Response
+    {
+        $playlist->addUnlikePlay();
+        $this->playlistRepository->add($playlist);
+
+        return $this->redirectToRoute('playlists');
+    }
 }

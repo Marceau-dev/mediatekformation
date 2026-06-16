@@ -55,6 +55,14 @@
                                 </select>
                             </form>
                     </th>
+                    
+                    <th class="text-center align-top">
+                        Likes
+                    </th>
+
+                    <th class="text-center align-top">
+                        Unlikes
+                    </th>
 
                     <th class="text-center align-top">
                         Actions<br>
@@ -87,6 +95,14 @@
                             {% endfor %}
                         </td>
 
+                        <td class="text-center">
+                            {{ playlist.likePlay }}
+                        </td>
+
+                        <td class="text-center">
+                            {{ playlist.unlikePlay }}
+                        </td>
+                        
                         <td class="text-center" style="white-space: nowrap;">
                             <a href="{{ path('admin.playlists.edit', {id: playlist.id}) }}"
                                class="btn btn-info active">

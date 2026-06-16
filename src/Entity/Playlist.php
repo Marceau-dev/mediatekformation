@@ -31,6 +31,12 @@ class Playlist
     #[ORM\OneToMany(targetEntity: Formation::class, mappedBy: 'playlist')]
     private Collection $formations;
 
+    #[ORM\Column]
+    private ?int $like_play = 0;
+
+    #[ORM\Column]
+    private ?int $unlike_play = 0;
+
     public function __construct()
     {
         $this->formations = new ArrayCollection();
@@ -137,5 +143,42 @@ class Playlist
         }
         return $categories;
     }
-        
+
+    public function getLikePlay(): int
+    {
+        return $this->like_play;
+    }
+
+    public function setLikePlay(int $like_play): static
+    {
+        $this->like_play = $like_play;
+
+        return $this;
+    }
+
+    public function getUnlikePlay(): int
+    {
+        return $this->unlike_play;
+    }
+
+    public function setUnlikePlay(int $unlike_play): static
+    {
+        $this->unlike_play = $unlike_play;
+
+        return $this;
+    }
+    
+    public function addLikePlay() :static
+    {
+    $this->like_play++;
+
+    return $this;
+    }
+       
+    public function addUnLikePlay() :static
+    {
+    $this->unlike_play++;
+
+    return $this;
+    }
 }

@@ -39,7 +39,10 @@
                     </form>            
                 </th>
                 <th class="text-center align-top" scope="col">
-                    &nbsp;
+                    Avis
+                </th>
+                <th class="text-center align-top" scope="col">
+                    Détails
                 </th>				
             </tr>
         </thead>
@@ -63,7 +66,16 @@
                                     &nbsp;{{ categories[c] }}                                  
                                 {% endfor %}
                             {% endif %}
-                        </td>            					
+                        </td>
+                        <td class="text-center">
+                            <form method="post" action="{{ path('playlists.like', {id: playlists[k].id}) }}" style="display:inline-block;">
+                                <button class="btn btn-success btn-sm">Like</button>
+                            </form>
+
+                            <form method="post" action="{{ path('playlists.unlike', {id: playlists[k].id}) }}" style="display:inline-block;">
+                                <button class="btn btn-danger btn-sm">Unlike</button>
+                            </form>
+                        </td>
                         <td class="text-center">
                             <a href="{{ path('playlists.showone', {id:playlists[k].id}) }}" class="btn btn-secondary">Voir détail</a>
                         </td> 					
